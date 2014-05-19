@@ -5,12 +5,14 @@ body {
 	font-family: Arial,sans-serif;
 	font-size: 15px;
 	color: #CCC;
-}
 
+	width: 100%;
+}
+/* killing this... bad CSS code
 a, a:visited {
 	color: #EE2E24;
 	text-decoration: none;
-}
+} */
 
 #headwrap {
 	background: #000 url(../img/bg-header.jpg) no-repeat center top;
@@ -25,7 +27,7 @@ a, a:visited {
 	margin: 0 auto;
 	width: 1000px;
 }
-
+/* unnecessary graphic. just more to load.
 .logo {
 	background: url(../img/logo.jpg) no-repeat;
 	height: 112px;
@@ -34,7 +36,7 @@ a, a:visited {
 	white-space: nowrap;
 	width: 200px;
 	margin: 0 auto;
-}
+} */
 
 #content {
 	background-color: #131313;
@@ -46,7 +48,7 @@ a, a:visited {
 	margin: 0 auto 70px auto;
 	padding: 40px 0 0;
 	position: relative;
-	width: 1000px;
+	width: 80%; /* for responsive design */
 	padding: 40px 25px;
 }
 
