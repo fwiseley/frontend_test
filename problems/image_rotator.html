@@ -2,29 +2,341 @@
 <html>
 <head>
 	<title>Frontend Coding Test</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Every site should insert the HTML5 shim so all you have to code is HTML5! SOMETIMES 3rd party libraries are useful and dare I say necessary. -->
+	<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	<link type="text/css" rel="stylesheet" href="../css/style.css" />
+	<link type="text/css" rel="stylesheet" href='http://fonts.googleapis.com/css?family=Oswald' />
 	<style type="text/css">
+		/* A quick fix so your test site is actually responsive in lieu
+		@media CSS where I would change the image size for faster mobile
+		loading. */
+
+		body {
+			height: 100%;
+			width: 100%;
+		}
+		#content {
+			width: 80%;
+		}
+		.clearfix:before,
+		.clearfix:after {
+			content: " ";
+			display: table;
+		}
+		.clearfix:after {
+			clear: both;
+		}
+		.clearfix {
+			*zoom: 1;
+		} 
+		/* First, there is no need to this to be a unique ID. 
+		We turn this into a class and we can use the same CSS3 code everywhere.
 		#rotator {
 			width: 450px;
 			height: 300px;
 			border: 1px solid black;
 			background: #aaa;
 			text-align: center;
+		} */
+		/* We use retaliative positioning on the containing Div because 
+		   the figure elements inside of it are going to be absolutely
+		   positioned */
+		.rotator {
+			position: relative;
+			display: block;
+			overflow: hidden;
+			max-width: 35em;
+			max-height: 100%;
+			margin:0 auto;		
 		}
-	</style>
+		/* Seeing as how it's been around a while let's use some HTML5 elements. 
+		There are many examples of this lying around the web. As far as I know this 
+		is the least amount of CSS code that will work brilliantly. 
+		
+		Also, so we can get some graceful degradation for older browsers like IE 9 
+		and so on, we set normal normal HTML5/CSS3 classes		*/
+		figure{
+			position: absolute;
+			opacity: 0;
+			transition: 1s opacity;
+		}
+		figure.show{
+			opacity: 1;
+			position: static;
+			transition: 1s opacity;
+		}
+			
+		/* Using CSS3 we can add groovy animations with just a little code using 
+			@keyframes. This is miles faster than JavaScript and less code while 
+			gracefully falling back to a simple fade for browsers that don't 
+			support them. */
+			
+		/* Here we will be using a pseudo-selector called nth-child. It can be 
+		   used to select specific elements ordered in the number they appear 
+		   down the code. This is very powerful and can use complex math, but 
+		   we only need to simply call the show class that we want. */
+		figure.show:nth-child(1){
+			animation-name: slideDown;
+			-webkit-animation-name: slideDown;	
+			animation-duration: 1s;	
+			-webkit-animation-duration: 1s;
+			animation-timing-function: ease;	
+			-webkit-animation-timing-function: ease;	
+			/* Using !important tells the CSS to ignore subsequent rules, and 
+			any usual specificity issues, apply this rule! */
+			visibility: visible !important;	
+		}	
+		figure.show:nth-child(2){
+			animation-name: slideUp;
+			-webkit-animation-name: slideUp;	
+			animation-duration: 1s;	
+			-webkit-animation-duration: 1s;
+			animation-timing-function: ease;	
+			-webkit-animation-timing-function: ease;
+			visibility: visible !important;	
+		}
+		figure.show:nth-child(2){
+			animation-name: slideUp;
+			-webkit-animation-name: slideUp;	
+			animation-duration: 1s;	
+			-webkit-animation-duration: 1s;
+			animation-timing-function: ease;	
+			-webkit-animation-timing-function: ease;
+			visibility: visible !important;	
+		}
+		figure.show:nth-child(3){
+			animation-name: slideLeft;
+			-webkit-animation-name: slideLeft;	
+			animation-duration: 1s;	
+			-webkit-animation-duration: 1s;
+			animation-timing-function: ease-in-out;	
+			-webkit-animation-timing-function: ease-in-out;		
+			visibility: visible !important;		
+		}
+		figure.show:nth-child(4){
+			animation-name: slideRight;
+			-webkit-animation-name: slideRight;	
+			animation-duration: 1s;	
+			-webkit-animation-duration: 1s;
+			animation-timing-function: ease-in-out;	
+			-webkit-animation-timing-function: ease-in-out;		
+			visibility: visible !important;			
+		}
+		
+		/* This applies to all of the original images so they become responsive. */
+		img {
+			max-width: 100%;
+		}
+		figcaption{
+			position: absolute;
+			font-size: .8em;
+			bottom: .75em;
+			right: .35em;
+			padding: .25em;
+			color: #fff;
+			background: rgba(0,0,0, .50);
+			border-radius: 2px;
+		}
+		figcaption a{
+			color: #fff;
+		}
+		
+		#next, #prev{
+			color: #fff;
+			position: absolute;
+			background: rgba(0,0,0, .6);
+			top: 50%;
+			z-index: 1;
+			font-size: 2em;
+			margin-top: -.75em;
+			opacity: .3;
+			user-select: none;
+		}
+		#next:hover, #prev:hover{
+			cursor: pointer;
+			opacity: 1;
+		}
+		#next{
+			right: 0;
+			padding: 10px 5px 15px 10px;
+			border-top-left-radius: 3px;
+			border-bottom-left-radius: 3px;
+		}
+		#prev{
+			left: 0;
+			padding: 10px 10px 15px 5px;
+			border-top-right-radius: 3px;
+			border-bottom-right-radius: 3px;
+		}
+		
+		/* Simple @keyframe animations template from http://www.justinaguilar.com/animations/css/animations.css */
+		
+		/* slide down animation */
+		@keyframes slideDown {
+			0% { transform: translateY(-100%); }
+			50%{ transform: translateY(8%); }
+			65%{ transform: translateY(-4%); }
+			80%{ transform: translateY(4%); }
+			95%{ transform: translateY(-2%);}			
+			100% { transform: translateY(0%);}		
+		}
+		@-webkit-keyframes slideDown {
+			0% { -webkit-transform: translateY(-100%); }
+			50%{ -webkit-transform: translateY(8%); }
+			65%{ -webkit-transform: translateY(-4%); }
+			80%{ -webkit-transform: translateY(4%); }
+			95%{ -webkit-transform: translateY(-2%); }			
+			100% { -webkit-transform: translateY(0%);}	
+		}
+		
+		/* slide up animation */
+		@keyframes slideUp {
+			0% { transform: translateY(100%);}
+			50%{ transform: translateY(-8%); }
+			65%{ transform: translateY(4%); }
+			80%{ transform: translateY(-4%); }
+			95%{ transform: translateY(2%); }			
+			100% { transform: translateY(0%); }	
+		}
+		@-webkit-keyframes slideUp {
+			0% { -webkit-transform: translateY(100%); }
+			50%{ -webkit-transform: translateY(-8%); }
+			65%{ -webkit-transform: translateY(4%); }
+			80%{ -webkit-transform: translateY(-4%); }
+			95%{ -webkit-transform: translateY(2%); }			
+			100% { -webkit-transform: translateY(0%); }	
+		}
+		
+		/* slide left animation */
+		@keyframes slideLeft {
+			0% { transform: translateX(150%); }
+			50%{ transform: translateX(-8%); }
+			65%{ transform: translateX(4%); }
+			80%{ transform: translateX(-4%); }
+			95%{ transform: translateX(2%); }			
+			100% { transform: translateX(0%); }
+		}
+		@-webkit-keyframes slideLeft {
+			0% { -webkit-transform: translateX(150%); }
+			50%{ -webkit-transform: translateX(-8%); }
+			65%{ -webkit-transform: translateX(4%); }
+			80%{ -webkit-transform: translateX(-4%); }
+			95%{ -webkit-transform: translateX(2%); }			
+			100% { -webkit-transform: translateX(0%); }
+		}
+		
+		/* slide right animation */
+		@keyframes slideRight {
+			0% { transform: translateX(-150%); }
+			50%{ transform: translateX(8%); }
+			65%{ transform: translateX(-4%); }
+			80%{ transform: translateX(4%); }
+			95%{ transform: translateX(-2%); }			
+			100% { transform: translateX(0%); }	
+		}
+		@-webkit-keyframes slideRight {
+			0% { -webkit-transform: translateX(-150%); }
+			50%{ -webkit-transform: translateX(8%); }
+			65%{ -webkit-transform: translateX(-4%);}
+			80%{ -webkit-transform: translateX(4%); }
+			95%{ -webkit-transform: translateX(-2%); }			
+			100% { -webkit-transform: translateX(0%); }
+		}
+		
+		/* And because my OCD won't let this go I also fixed your header navigation to be responsive... ugh! */
+		header {
+			background: url(../img/bg-nav-new.png) no-repeat center;
+			text-align: center;
+			margin: 0 auto;
+			max-width: 100%;
+		}
+		nav {margin-right: 0; padding-right: 40px;}
+		nav ul {
+			display: block !important;
+			margin: 0px auto;
+			max-width:  848px;
+			height:112px;
+		}
+		nav li{
+			display: inline-block;	
+			float:left;
+			height:112px;
+		}
+		nav a {
+			display: block;
+			text-decoration: none; 
+			color: white;
+			font-size: 1.2em;
+			font-weight: 300;
+			text-shadow: 0px 3px 0.05em #000;
+			text-decoration: none;
+			font-family: 'Oswald', sans-serif;
+			text-transform: uppercase;
+			margin-left: 70px;
+			margin-top: 50px;		
+		}
+		nav li:nth-child(2) {
+			padding-right: 70px;
+		}
+		nav li:nth-child(4) {
+			padding-left: 10px;
+		}
+		a:hover { color: red; text-decoration: none; }
+		.logo {
+			height: 112px;
+			width: 200px;
+			margin: 0 auto;
+		}
+		
+		/* responsive rules */
+		/* And... so on. */
+		@media all and (max-width : 1000px) {
+			nav a {
+				display: block;
+				text-decoration: none; 
+				color: white;
+				font-size: 1.2em;
+				font-weight: 300;
+				text-shadow: 0px 3px 0.05em #000;
+				text-decoration: none;
+				font-family: 'Oswald', sans-serif;
+				text-transform: uppercase;
+				margin-left: 35px;
+				margin-top: 50px;		
+			}
+			nav li:nth-child(2) {
+				padding-right: 35px;
+			}
+			nav li:nth-child(4) {
+				margin-left: -40px;
+			}
+		}
+		
+	</style> 
+</script>
 </head>
 <body>
 	<div id="headwrap">
-	<div class="head">
-		<div class="logo">Riot Games</div>
+		<header>
+			<nav>
+				<ul>
+					<li><a href="http://www.riotgames.com/about">About</a></li>
+					<li><a href="http://www.riotgames.com/careers">Careers</a></li>
+					<li><a class="logo" href="http://www.riotgames.com/"></a></li>
+					<li><a href="http://www.riotgames.com/our-games">Games</a></li>
+					<li><a href="http://www.riotgames.com/news">News</a></li>
+				</ul> 
+			</nav>
+		</header>	
 	</div>
-</div>
 
 <div id="content">
 	<h1><span class="red">Image</span> Rotator</h1>
 
 	<p>
-		Using the below images, make a rotator in the box below that shows only one of the Katarina skins every 3 seconds.  The rotator should also display the correct image title and description with each image change.
+		Using the below images, make a rotator in the box below that shows only one of the Katarina skins every 3 seconds.  
+		The rotator should also display the correct image title and description with each image change.
 	</p>
 	<p>
 		It would be really awesome if the slides animated between one another!
@@ -50,10 +362,83 @@
 
 	<hr/>
 
-	<div id="rotator">
-		Rotator Here
+	<div class="rotator">
+		 
+		<figure class="show">
+			<img alt="Katarina" src="../img/kat_1.jpg" />
+			<figcaption>Fruitcake bonbon donut jelly-o brownie biscuit marzipan pie.</figcaption>
+		</figure>
+		<figure>
+			<img alt="Red Card Katarina" src="../img/kat_2.jpg" />
+			<figcaption>Cheesecake marzipan cupcake biscuit candy canes pudding.</figcaption>
+		</figure>
+		
+		<figure>
+			<img alt="Kitty Cat Katarina" src="../img/kat_3.jpg" />
+			<figcaption>Applicake topping halvah lemon drops wypas cotton candy.</figcaption>
+		</figure>
+		
+		<figure>
+			<img alt="High Command Katarina" src="../img/kat_4.jpg" />
+			<figcaption>IOat cake macaroon souffle cupcake chupa chups chocolate bar bear claw dragee lemon drops.</figcaption>	
+		</figure>
+ 
+		<span id="prev">&laquo;</span>
+		<span id="next">&raquo;</span>
+ 
+ 
 	</div>
 </div>
+<script>
+(function(document){
+	// JavaScript at the bottom of the page to help with load times
+	
+	// basic counter to keep track of current slide
+    var counter = 0, 
+	// an array of slide images (didn't know how to call this with jQuery - thanks Google)
+	// https://developer.mozilla.org/en-US/docs/Web/API/Document.querySelectorAll
+    $slides = document.querySelectorAll('.rotator figure'), 
+	// the count of the array
+    numItems = $slides.length; 
 
+    // show the next or previous slide while keeping the others hidden
+    var showCurrent = function(){
+		// again did not know how to use this operator in JS or if it was even possible -- offsets yay! thanks applescript!
+		// http://stackoverflow.com/questions/16505559/how-can-i-use-modulo-operator-in-javascript
+        var slideToShow = Math.abs(counter%numItems);
+  
+        // more help from Google
+        // http://stackoverflow.com/a/16053538/2006057
+        [].forEach.call( $slides, function(el){
+            el.classList.remove('show');
+        });
+  
+        // add .show to the one slide that's supposed to have it
+        $slides[slideToShow].classList.add('show');    
+    };
+
+	// these add click events for the prev & next buttons were taken from Google because I am spoiled by JQuery.
+	// http://stackoverflow.com/questions/12627443/jquery-click-vs-onclick
+	var nextSlide = document.getElementById('next');
+	var prevSlide = document.getElementById('prev');
+	
+	nextSlide.addEventListener('click', function() {
+        counter++;
+        showCurrent();
+    }, false);
+
+    prevSlide.addEventListener('click', function() {
+        counter--;
+        showCurrent();
+    }, false)
+	
+	// automated slide in milliseconds (3000 - 3)
+	window.setInterval(function(){
+		counter++;
+		showCurrent();
+	}, 3000);
+  
+})(document);
+</script>
 </body>
 </html>
