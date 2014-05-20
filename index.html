@@ -3,16 +3,105 @@
 <head>
 	<title>Frontend Coding Test</title>
 	<link type="text/css" rel="stylesheet" href="css/style.css" />
+	<link type="text/css" rel="stylesheet" href='http://fonts.googleapis.com/css?family=Oswald' />
+	<style type="text/css">
+		/* A quick fix so your test site is actually responsive in lieu
+		@media CSS where I would change the image size for faster mobile
+		loading. */
+
+		body {
+			height: 100%;
+			width: 100%;
+		}
+		#content {
+			width: 80%;
+		}
+		/* And because my OCD won't let this go I also fixed your header navigation to be responsive... ugh! */
+		header {
+			background: url(img/bg-nav-new.png) no-repeat center;
+			text-align: center;
+			margin: 0 auto;
+			max-width: 100%;
+		}
+		nav {margin-right: 0; padding-right: 40px;}
+		nav ul {
+			display: block !important;
+			margin: 0px auto;
+			max-width:  848px;
+			height:112px;
+		}
+		nav li{
+			display: inline-block;	
+			float:left;
+			height:112px;
+		}
+		nav a {
+			display: block;
+			text-decoration: none; 
+			color: white;
+			font-size: 1.2em;
+			font-weight: 300;
+			text-shadow: 0px 3px 0.05em #000;
+			text-decoration: none;
+			font-family: 'Oswald', sans-serif;
+			text-transform: uppercase;
+			margin-left: 70px;
+			margin-top: 50px;		
+		}
+		nav li:nth-child(2) {
+			padding-right: 70px;
+		}
+		nav li:nth-child(4) {
+			padding-left: 10px;
+		}
+		a:hover { color: red; text-decoration: none; }
+		.logo {
+			height: 112px;
+			width: 200px;
+			margin: 0 auto;
+		}
+		
+		/* responsive rules */
+		/* And... so on. */
+		@media all and (max-width : 1000px) {
+			nav a {
+				display: block;
+				text-decoration: none; 
+				color: white;
+				font-size: 1.2em;
+				font-weight: 300;
+				text-shadow: 0px 3px 0.05em #000;
+				text-decoration: none;
+				font-family: 'Oswald', sans-serif;
+				text-transform: uppercase;
+				margin-left: 35px;
+				margin-top: 50px;		
+			}
+			nav li:nth-child(2) {
+				padding-right: 35px;
+			}
+			nav li:nth-child(4) {
+				margin-left: -40px;
+			}
+		}	
+	</style> 
 </head>
 <body>
 	<div id="headwrap">
-		<div class="head">
-			<div class="logo">Riot Games</div>
-		</div>
+		<header>
+			<nav>
+				<ul>
+					<li><a href="http://www.riotgames.com/about">About</a></li>
+					<li><a href="http://www.riotgames.com/careers">Careers</a></li>
+					<li><a class="logo" href="http://www.riotgames.com/"></a></li>
+					<li><a href="http://www.riotgames.com/our-games">Games</a></li>
+					<li><a href="http://www.riotgames.com/news">News</a></li>
+				</ul> 
+			</nav>
+		</header>	
 	</div>
-
-
-	<div id="content">
+	<!-- no reason at all for this to be an ID especially in HTML5 -->
+	<div class="content">
 		<h1><span class="red">Frontend</span> Coding Test</h1>
 		<p>
 			Below is a series of links to problems, each problem is an HTML file that contains the explaination of the problem as well as a partial solution.

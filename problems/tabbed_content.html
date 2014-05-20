@@ -3,6 +3,7 @@
 <head>
 	<title>Frontend Coding Test</title>
 	<link type="text/css" rel="stylesheet" href="../css/style.css" />
+	<link type="text/css" rel="stylesheet" href='http://fonts.googleapis.com/css?family=Oswald' />
 	<style type="text/css">
 		.picture {
 			background-color: #F9F9F9;
@@ -17,15 +18,173 @@
 			border: 1px solid #CCCCCC;
 			vertical-align:middle; margin-bottom: 3px;
 		}
-	</style>
+
+		/* A quick fix so your test site is actually responsive in lieu
+		@media CSS where I would change the image size for faster mobile
+		loading. */
+
+		body {
+			height: 100%;
+			width: 100%;
+		}
+		#content {
+			width: 80%;
+		}
+		/* And because my OCD won't let this go I also fixed your header navigation to be responsive... ugh! */
+		header {
+			background: url(../img/bg-nav-new.png) no-repeat center;
+			text-align: center;
+			margin: 0 auto;
+			max-width: 100%;
+		}
+		nav {margin-right: 0; padding-right: 40px;}
+		nav ul {
+			display: block !important;
+			margin: 0px auto;
+			max-width:  848px;
+			height:112px;
+		}
+		nav li{
+			display: inline-block;	
+			float:left;
+			height:112px;
+		}
+		nav a {
+			display: block;
+			text-decoration: none; 
+			color: white;
+			font-size: 1.2em;
+			font-weight: 300;
+			text-shadow: 0px 3px 0.05em #000;
+			text-decoration: none;
+			font-family: 'Oswald', sans-serif;
+			text-transform: uppercase;
+			margin-left: 70px;
+			margin-top: 50px;		
+		}
+		nav li:nth-child(2) {
+			padding-right: 70px;
+		}
+		nav li:nth-child(4) {
+			padding-left: 10px;
+		}
+		a:hover { color: red; text-decoration: none; }
+		.logo {
+			height: 112px;
+			width: 200px;
+			margin: 0 auto;
+		}
+		
+		/* responsive rules */
+		/* And... so on. */
+		@media all and (max-width : 1000px) {
+			nav a {
+				display: block;
+				text-decoration: none; 
+				color: white;
+				font-size: 1.2em;
+				font-weight: 300;
+				text-shadow: 0px 3px 0.05em #000;
+				text-decoration: none;
+				font-family: 'Oswald', sans-serif;
+				text-transform: uppercase;
+				margin-left: 35px;
+				margin-top: 50px;		
+			}
+			nav li:nth-child(2) {
+				padding-right: 35px;
+			}
+			nav li:nth-child(4) {
+				margin-left: -40px;
+			}
+		}	
+		/* Tabs */	
+		/* Once again I'm going to try to bring some of thiscode into this decade by using HTML5. 
+			Instead of JavaScript (once again) we can use CSS3 for speed and simplicity. This is pretty 
+			much the standard way of doing this. you can find millions of these examples and tutorials 
+			all over the web. This method is call :target selector tab control. */
+
+		article.tabs{
+			position: relative;
+			display: block;
+			width: 40em;
+			height: 15em;
+			margin: 2em auto;
+		}
+		article.tabs section {
+			position: absolute;
+			display: block;
+			top: 1.8em;
+			left: 0;
+			height: 12em;
+			padding: 10px 20px;
+			background-color: #ddd;
+			border-radius: 5px;
+			box-shadow: 0 3px 3px rgba(0,0,0,0.1);
+			z-index: 0;
+			color: black;
+		}
+		/* Remember to set the first tab, Frank */
+		article.tabs section:first-child{ z-index: 1;background-color: #fff; }
+		
+		article.tabs section h2 {
+			position: absolute;
+			font-size: 1em;
+			font-weight: normal;
+			width: 120px;
+			height: 1.8em;
+			top: -1.8em;
+			left: 10px;
+			padding: 0;
+			margin: 0;
+			color: #999;
+			background-color: #ddd;
+			border-radius: 5px 5px 0 0;
+		}
+		article.tabs section:nth-child(2) h2 { left: 132px; }
+		article.tabs section:nth-child(3) h2 { left: 254px; }
+		article.tabs section h2 a {
+			display: block;
+			width: 100%;
+			line-height: 1.8em;
+			color: white;
+			font-size: 1.2em;
+			font-weight: 300;
+			font-family: 'Oswald', sans-serif;
+			text-transform: uppercase;
+			text-shadow: 0px 1px 0.05em #000;
+			text-decoration: none;
+			text-align: center;
+		}
+		article.tabs section,
+		article.tabs section h2 {
+		/* Add cool transitions here!*/ 
+	
+		}
+		article.tabs section:target,
+		article.tabs section:target h2 {
+			color: #333;
+			background-color: #fff;
+			z-index: 2;
+		}
+	</style> 
 </head>
-<body>	
+<body>
 	<div id="headwrap">
-		<div class="head">
-			<div class="logo">Riot Games</div>
-		</div>
+		<header>
+			<nav>
+				<ul>
+					<li><a href="http://www.riotgames.com/about">About</a></li>
+					<li><a href="http://www.riotgames.com/careers">Careers</a></li>
+					<li><a class="logo" href="http://www.riotgames.com/"></a></li>
+					<li><a href="http://www.riotgames.com/our-games">Games</a></li>
+					<li><a href="http://www.riotgames.com/news">News</a></li>
+				</ul> 
+			</nav>
+		</header>	
 	</div>
-	<div id="content">
+	<!-- no reason at all for this to be an ID especially in HTML5 -->
+	<div class="content">
 		<h1><span class="red">Tabbed</span> content</h1>
 
 		<p>
@@ -38,25 +197,35 @@
 		</div>
 
 		<hr/>
+		
+		<article class="tabs">
+			<section id="tab1">
+				<h2><a href="#tab1">Tab 1</a></h2>
+				<p class="fadeIn">
+				Gingerbread muffin gummies gingerbread macaroon. Lollipop candy applicake toffee faworki. 
+				Bear claw topping jelly toffee toffee powder tiramisu candy chupa chups. Chupa chups dragee 
+				icing applicake chupa chups dessert. Croissant jelly faworki marzipan tootsie roll marshmallow. 
+				Marshmallow toffee sweet roll fruitcake.
+				</p>
+			</section>	
+			<section id="tab2">
+				<h2><a href="#tab2">Tab 2</a></h2>
+				<p class="fadeIn">
+				Chocolate faworki croissant brownie halvah macaroon gummi bears wypas. Chupa chups icing 
+				gummies pudding dessert carrot cake. Cupcake jelly beans sweet roll icing ice cream apple pie 
+				tootsie roll gummi bears marzipan. Brownie gummies chupa chups pie. Cupcake jujubes topping. 
+				</p>
+			</section>
+			<section id="tab3">
+				<h2><a href="#tab3">Tab 3</a></h2>
+				<p class="fadeIn">
+				Cheesecake jelly beans ice cream lollipop sweet pastry. Chupa chups dessert cheesecake 
+				sesame snaps. Cookie ice cream candy canes pastry cake muffin. Icing chocolate sweet gummi 
+				bears powder oat cake oat cake lemon drops.
+				</p>
+			</section>
+		</article>
 
-		<div id="container">
-			Turn this content into a tabbed container.
-
-			<h3>Tab 1</h3>
-			<p>
-				Gingerbread muffin gummies gingerbread macaroon. Lollipop candy applicake toffee faworki. Bear claw topping jelly toffee toffee powder tiramisu candy chupa chups. Chupa chups dragee icing applicake chupa chups dessert. Croissant jelly faworki marzipan tootsie roll marshmallow. Marshmallow toffee sweet roll fruitcake.
-			</p>
-
-			<h3>Tab 2</h3>
-			<p>
-				Chocolate faworki croissant brownie halvah macaroon gummi bears wypas. Chupa chups icing gummies pudding dessert carrot cake. Cupcake jelly beans sweet roll icing ice cream apple pie tootsie roll gummi bears marzipan. Brownie gummies chupa chups pie. Cupcake jujubes topping. 
-			</p>
-
-			<h3>Tab 3</h3>
-			<p>
-				Cheesecake jelly beans ice cream lollipop sweet pastry. Chupa chups dessert cheesecake sesame snaps. Cookie ice cream candy canes pastry cake muffin. Icing chocolate sweet gummi bears powder oat cake oat cake lemon drops.
-			</p>
-		</div>
 	</div>
 </body>
 </html>
